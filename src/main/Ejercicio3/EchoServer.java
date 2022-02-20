@@ -32,7 +32,7 @@ public class EchoServer {
                 double nm = Double.parseDouble(inputLine);
                 outputLine = "Res: " + nm * nm;
             }catch (Exception e){
-                outputLine = "Mal ingreso de datos."
+                outputLine = "Mal ingreso de datos.";
             }
 
             out.println(outputLine);

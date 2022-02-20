@@ -1,9 +1,16 @@
+package main.Ejercicio1;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class URLParser{
+    /**
+     * Se crea un objeto URL y encuentra los componentes de ella
+     * @param args
+     */
     public static void main(String[] args){
         try{
             URL googleURl = new URL("http://www.google.com:80/docs/index.html?size=8#ref");

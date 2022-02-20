@@ -1,3 +1,5 @@
+package main.Ejercicio2;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -7,28 +9,41 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+
+
 public class AppBrowser {
     String url;
 
 
     public static void main(String[] args) {
-        Browser browser = new Browser();
+        AppBrowser browser = new AppBrowser();
     }
 
-    Browser() {
+    /**
+     * Genera una instancia de AppBrowser
+     */
+    AppBrowser() {
         this.url = this.askForUrl();
         String html = this.getHtmlFromUrl();
-        this.writeData(html);
-        System.out.println(this.url);
-        System.out.println(" --- HTML ---");
-        System.out.println(html);
+        writeData(html);
+
     }
 
-    public Browser(String URL) {
+
+    /**
+     * Genera una instancia de AppBrowser
+     * @param URL, URL a la cual se le van a encontrar los datos necesarios
+     */
+    public AppBrowser(String URL) {
         this.url = URL;
         String html = this.getHtmlFromUrl();
         writeData(html);
     }
+
+    /**
+     * Entrada de texto para encontrar la URL
+     * @return URl leída
+     */
 
     private String askForUrl() {
         Scanner scanner = new Scanner(System.in);
@@ -39,22 +54,22 @@ public class AppBrowser {
         return res;
     }
 
+    /**
+     * Datos de la URL
+     * @return String con los datos de la URL
+     */
     private String getHtmlFromUrl() {
         String htmlResponse = "";
 
         try {
-            // Create the URL
             URL siteURL = new URL(this.url);
 
-            // Create the connection
             URLConnection urlConnection = siteURL.openConnection();
 
-            // Get headers
             Map<String, List<String>> headers = urlConnection.getHeaderFields();
 
             Set<Map.Entry<String, List<String>>> entrySet = headers.entrySet();
 
-            // Print headers
             for(Map.Entry<String, List<String>> entry : entrySet){
                 String headerName = entry.getKey();
 
@@ -68,7 +83,6 @@ public class AppBrowser {
                     System.out.println(value);
                 }
 
-                System.out.println(" ");
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(siteURL.openStream()));
@@ -80,17 +94,20 @@ public class AppBrowser {
                 htmlResponse += inputLine;
             }
 
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException e) {
             System.out.println("URL mal formada");
-            System.out.println(ex.getMessage());
+            System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println("Error en la conexión");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return htmlResponse;
     }
 
+    /**
+     * Escribe los datos en un archivo de texto
+     * @param html, String con los datos a escribir
+     */
     private void writeData(String html) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("resultado.html"));
@@ -99,9 +116,7 @@ public class AppBrowser {
 
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
-
-
 }
